@@ -1,0 +1,82 @@
+[
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "isbn": "9780061120084",
+    "published_year": 1960,
+    "pages": 324,
+    "available": true,
+    "genre": "Fiction",
+    "summary": "A gripping tale of racial injustice and childhood innocence"
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "isbn": "9780451524935",
+    "published_year": 1949,
+    "pages": 328,
+    "available": true,
+    "genre": "Science Fiction",
+    "summary": "A dystopian social science fiction novel"
+  },
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "isbn": "9780141439518",
+    "published_year": 1813,
+    "pages": 432,
+    "available": false,
+    "genre": "Romance",
+    "summary": "A romantic novel of manners"
+  },
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "published_year": 1925,
+    "pages": 180,
+    "available": true,
+    "genre": "Fiction",
+    "summary": "A classic American novel set in the 1920s"
+  },
+  {
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "isbn": "9780547928227",
+    "published_year": 1937,
+    "pages": 310,
+    "available": true,
+    "genre": "Fantasy",
+    "summary": "A fantasy adventure novel"
+  },
+  {
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "author": "J.K. Rowling",
+    "isbn": "9780439708180",
+    "published_year": 1997,
+    "pages": 309,
+    "available": false,
+    "genre": "Fantasy",
+    "summary": "The first book in the Harry Potter series"
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "isbn": "9780316769488",
+    "published_year": 1951,
+    "pages": 277,
+    "available": true,
+    "genre": "Fiction",
+    "summary": "A story about teenage rebellion and alienation"
+  },
+  {
+    "title": "Animal Farm",
+    "author": "George Orwell",
+    "isbn": "9780451526342",
+    "published_year": 1945,
+    "pages": 112,
+    "available": true,
+    "genre": "Fiction",
+    "summary": "An allegorical novella about Soviet totalitarianism"
+  }
+]

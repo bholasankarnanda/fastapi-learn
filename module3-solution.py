@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Query, Path
 from pydantic import BaseModel, Field
-from typing import List
 from datetime import datetime
+import json
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -13,6 +13,37 @@ app = FastAPI(
 # In-memory database
 books_db = {}
 book_counter = 0
+
+
+# JSON load
+def load_sample_data():
+    global book_counter
+
+    try:
+        with open("library_data.json", "r") as f:
+            books = json.load(f)
+
+        for book_data in books:
+            book_counter += 1
+            book_entry = {
+                "id": book_counter,
+                "added_at": datetime.now().isoformat(),
+                **book_data,
+            }
+            books_db[book_counter] = book_entry
+
+        print(f"✓ Loaded {len(books)} sample books")
+
+    except FileNotFoundError:
+        print("⚠ library_data.json not found - starting with empty database")
+    except json.JSONDecodeError:
+        print("⚠ Error reading library_data.json - invalid JSON format")
+
+
+@app.on_event("startup")
+def startup_event():
+    """Load sample data when API starts"""
+    load_sample_data()
 
 
 # PYDANTIC MODELS (Data Validation)
@@ -97,7 +128,7 @@ def read_root():
 
 
 # GET ALL BOOKS (with query parameters for filtering)
-@app.get("/books", response_model=List[BookResponse], tags=["Books"])
+@app.get("/books", response_model=list[BookResponse], tags=["Books"])
 def get_all_books(
     genre: str | None = Query(None, description="Filter by genre"),
     author: str | None = Query(None, description="Filter by author"),
@@ -178,7 +209,7 @@ def create_books(book: Book):
 @app.put("/books/{book_id}", response_model=BookResponse, tags=["Books"])
 def update_book(
     book_id: int = Path(..., gt=0, description="This ID of book is updated."),
-    book_update: BookUpdate = None,
+    book_update: BookUpdate | None = None,
 ):
     if book_id not in books_db:
         raise HTTPException(
@@ -188,12 +219,13 @@ def update_book(
     previous_book = books_db[book_id]
 
     # Update only provided fields
-    update_data = book_update.model_dump(exclude_unset=True)
+    if book_update is not None:
+        update_data = book_update.model_dump(exclude_unset=True)
 
-    for filed, value in update_data.items():
-        previous_book[filed] = value
+        for filed, value in update_data.items():
+            previous_book[filed] = value
 
-    books_db[book_id] = previous_book
+        books_db[book_id] = previous_book
 
     return previous_book
 
@@ -217,7 +249,7 @@ def delete_book(
 
 
 # SEARCH PRODUCTS
-@app.get("/search/{author}/books", response_model=List[BookResponse], tags=["Search"])
+@app.get("/search/{author}/books", response_model=list[BookResponse], tags=["Search"])
 def search_by_author(
     author: str = Path(..., description="Filter by author"),
     available: bool | None = Query(None, description="Pass query as an available"),
